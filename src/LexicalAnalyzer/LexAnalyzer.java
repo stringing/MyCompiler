@@ -203,14 +203,8 @@ public class LexAnalyzer {
     private static List<Pair<String, String>> typeList = new ArrayList<>();
     private static StatusGraph graph = new StatusGraph();
 
-    public static void main(String[] args) throws IOException {
-        File program = new File("resource/program.txt");
-        lexProcess(program);
-        printTypes();
-    }
-
     //扫描函数的入口
-    private static void lexProcess(File program) throws IOException {
+    public static void lexProcess(File program) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(program)));
         String line = null;
         List<Pair<String, String>> typeList = new ArrayList<>();
@@ -228,7 +222,7 @@ public class LexAnalyzer {
     }
 
     //打印出最后结果
-    private static void printTypes(){
+    public static void printTypes(){
         for(Pair p : typeList){
             System.out.println("<" + p.getKey() + "," + p.getValue() + ">");
         }
