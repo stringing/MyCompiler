@@ -17,7 +17,7 @@ public class Grammar {
         protected Map<Character, List<String>> pformula;
 
         protected Pformula(){
-            pformula = new HashMap<>();
+            pformula = new LinkedHashMap<>();
         }
 
         @Override
@@ -110,6 +110,6 @@ public class Grammar {
         return "Vn: \n" + Vn.toString() + "\n"
                 + "Vt: \n" + Vt.toString().replace("null", "ε") + "\n"
                 + "S: \n" + S + "\n"
-                + "P: \n" + P.toString();
+                + "P: \n" + P.toString().replace("null", "ε");
     }
 }
