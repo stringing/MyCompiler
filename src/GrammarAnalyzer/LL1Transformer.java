@@ -11,6 +11,7 @@ import java.util.*;
 public class LL1Transformer {
 
     private static List<Character> alphabet = new ArrayList<>();
+    private static Map<Character, List<String>> newOrder;
     static {
         for(int i = 65; i <= 90; i++){
             alphabet.add((char)i);
@@ -47,8 +48,7 @@ public class LL1Transformer {
             //代入算法最后必定是非终结符排序的最后一个非终结符含有左递归
             if(p == grammar.P.pformula.size() - 1){
                 //每次取字母表当前第一个字母表示所谓的S'
-                Character c = alphabet.get(0);
-                alphabet.remove(0);
+                Character c = fetchOneCharacter();
                 //消除左递归
                 Character nonterminal = entry.getKey();
                 List<String> pfml = entry.getValue();
@@ -115,30 +115,73 @@ public class LL1Transformer {
      * @param grammar 待提取左因子的文法
      */
     public static void removeLeftGene(Grammar grammar){
+        newOrder = new LinkedHashMap<>();
         int p = 0;
+        boolean flag = false;
         for(Map.Entry<Character, List<String>> entry : grammar.P.pformula.entrySet()){
             if(p != grammar.P.pformula.size() - 1 && p != grammar.P.pformula.size() - 2){
+                Character nonterminal = entry.getKey();
                 List<String> alphas = entry.getValue();
-                Map<String, List<String>> commoms = new LinkedHashMap<>();
+                Map<String, List<String>> commons = new LinkedHashMap<>();
                 for(String alpha : alphas){
                     String first = alpha.substring(0, 1);
                     String tail = alpha.substring(1);
                     List<String> tmp;
-                    if(commoms.containsKey(first)){
-                        tmp = commoms.get(first);
+                    if(commons.containsKey(first)){
+                        tmp = commons.get(first);
                     }else{
                         tmp = new LinkedList<>();
                     }
-                    if(!tail.equals("")) {
-                        tmp.add(alpha.substring(1));
+                    tmp.add(tail);
+                    commons.put(first, tmp);
+                }
+                for(Map.Entry<String, List<String>> commonEntry : commons.entrySet()){
+                    List<String> list = commonEntry.getValue();
+                    if(list.size() >= 2){
+                        for(int i = 0; i < list.size(); i++){
+                            if(list.get(i).equals("")){
+                                list.set(i, "ε");
+                                break;
+                            }
+                        }
                     }
-                    commoms.put(first, tmp);
                 }
-                for(Map.Entry<String, List<String>> commonEntry : commoms.entrySet()){
-
+                List<String> substitution = new ArrayList<>();
+                Map<String, List<String>> newp = new LinkedHashMap<>();
+                for(Map.Entry<String, List<String>> commonEntry : commons.entrySet()){
+                    String key = commonEntry.getKey();
+                    List<String> value = commonEntry.getValue();
+                    if(value.size() >= 2)flag = true;
+                    Character c = null;
+                    if(value.size() == 1){
+                        substitution.add(key + value.get(0));
+                    }else{
+                        c = fetchOneCharacter();
+                        substitution.add(key + c);
+                        newp.put(String.valueOf(c), value);
+                    }
+                    grammar.P.pformula.replace(nonterminal, substitution);
+                    newOrder.put(nonterminal, substitution);
+                    if(c != null) {
+                        newOrder.put(c, value);
+                    }
                 }
+            }else{
+                newOrder.put(entry.getKey(),entry.getValue());
             }
             p++;
         }
+        grammar.P.pformula = newOrder;
+        if(flag)removeLeftGene(grammar);
+    }
+
+    /**
+     * 从可用字母集中取一个出来作新引进的非终结符
+     * @return 新引进的非终结符
+     */
+    private static Character fetchOneCharacter(){
+        Character c = alphabet.get(0);
+        alphabet.remove(0);
+        return c;
     }
 }

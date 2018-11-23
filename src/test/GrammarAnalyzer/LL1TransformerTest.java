@@ -23,4 +23,27 @@ public class LL1TransformerTest {
         System.out.println(g);
     }
 
+    @Test
+    public void removeLeftGeneTest() throws IOException {
+        Grammar g = new Grammar("resource/g2.txt");
+        System.out.println(g);
+        LL1Transformer.removeLeftRecursion(g);
+        System.out.println("---------------------");
+        System.out.println(g);
+        LL1Transformer.removeLeftGene(g);
+        System.out.println("---------------------");
+        System.out.println(g);
+    }
+
+    @Test
+    public void transToLL1Test() throws IOException {
+        long t1 = System.currentTimeMillis();
+        Grammar g = new Grammar("resource/g2.txt");
+        System.out.println(g);
+        LL1Transformer.transToLL1(g);
+        System.out.println("---------------------");
+        System.out.println(g);
+        long t2 = System.currentTimeMillis();
+        System.out.println("------------- 总运行时长：" + (t2 - t1) + "ms -------------");
+    }
 }

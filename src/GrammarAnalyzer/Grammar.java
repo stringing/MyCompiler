@@ -85,25 +85,22 @@ public class Grammar {
         String formula;
         while((formula = br.readLine()) != null){
             Character nonterminal = formula.charAt(0);
-            char[] candiniset = formula.substring(3, formula.length() - 1).toCharArray();
+            String[] candinisets = formula.substring(3, formula.length() - 1).split("\\|");
             if(S == null)S = nonterminal;
             Vn.add(nonterminal);
-            for(char c : candiniset){
-                if(Character.isAlphabetic(c) && Character.isUpperCase(c)){
-                    Vn.add(c);
-                }else{
-                    Vt.add(c);
+            for(String candiniset : candinisets) {
+                for (char c : candiniset.toCharArray()) {
+                    if (Character.isAlphabetic(c) && Character.isUpperCase(c)) {
+                        Vn.add(c);
+                    } else {
+                        Vt.add(c);
+                    }
                 }
+                addPformula(nonterminal, candiniset);
             }
-            addPformula(nonterminal, charsToString(candiniset));
         }
     }
 
-    private String charsToString(char[] candiniset) {
-        StringBuilder sb = new StringBuilder();
-        for(char c : candiniset)sb.append(c);
-        return sb.toString();
-    }
 
     @Override
     public String toString() {
