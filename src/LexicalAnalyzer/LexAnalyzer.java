@@ -206,8 +206,7 @@ public class LexAnalyzer {
     //扫描函数的入口
     public static void lexProcess(File program) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(program)));
-        String line = null;
-        List<Pair<String, String>> typeList = new ArrayList<>();
+        String line;
         int lineNum = 1;
         while((line = br.readLine()) != null){
             scan(line, lineNum++);
