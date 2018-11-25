@@ -76,7 +76,7 @@ public class Grammar {
     }
 
     /**
-     * 读入原始文法并整理
+     * 读入原始文法并归并整理
      * @param file 原始文法文件
      * @throws IOException
      */

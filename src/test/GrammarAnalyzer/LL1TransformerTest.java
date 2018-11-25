@@ -46,4 +46,13 @@ public class LL1TransformerTest {
         long t2 = System.currentTimeMillis();
         System.out.println("------------- 总运行时长：" + (t2 - t1) + "ms -------------");
     }
+
+    @Test
+    public void transToLL1Test2() throws IOException {
+        Grammar g = new Grammar("resource/grammar_1.txt");
+        System.out.println(g);
+        LL1Transformer.transToLL1(g);
+        System.out.println("---------------------");
+        System.out.println(g);
+    }
 }
