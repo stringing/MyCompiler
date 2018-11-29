@@ -1,10 +1,12 @@
-package test.GrammarAnalyzer;
+package test.Parser;
 
-import GrammarAnalyzer.Grammar;
-import GrammarAnalyzer.LL1Transformer;
+import Parser.Grammar;
+import Parser.LL1Transformer;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -55,4 +57,5 @@ public class LL1TransformerTest {
         System.out.println("---------------------");
         System.out.println(g);
     }
+
 }

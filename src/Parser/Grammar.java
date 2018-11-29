@@ -1,4 +1,4 @@
-package GrammarAnalyzer;
+package Parser;
 
 
 import java.io.*;
@@ -105,8 +105,8 @@ public class Grammar {
     @Override
     public String toString() {
         return "Vn: \n" + Vn.toString() + "\n"
-                + "Vt: \n" + Vt.toString().replace("null", "ε") + "\n"
+                + "Vt: \n" + Vt.toString() + "\n"
                 + "S: \n" + S + "\n"
-                + "P: \n" + P.toString().replace("null", "ε");
+                + "P: \n" + P.toString();
     }
 }

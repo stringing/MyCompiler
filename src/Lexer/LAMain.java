@@ -1,4 +1,4 @@
-package LexicalAnalyzer;
+package Lexer;
 
 /**
  * @Description 词法分析器入口

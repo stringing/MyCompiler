@@ -1,4 +1,4 @@
-package LexicalAnalyzer;
+package Lexer;
 
 import javafx.util.Pair;
 

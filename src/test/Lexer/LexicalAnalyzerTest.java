@@ -1,6 +1,6 @@
-package test.LexicalAnalyzer;
+package test.Lexer;
 
-import LexicalAnalyzer.LexAnalyzer;
+import Lexer.LexAnalyzer;
 import org.junit.Test;
 
 import java.io.File;

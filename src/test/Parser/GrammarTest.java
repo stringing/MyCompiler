@@ -1,6 +1,6 @@
-package test.GrammarAnalyzer;
+package test.Parser;
 
-import GrammarAnalyzer.Grammar;
+import Parser.Grammar;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class GrammarTest {
         g.Vn.add('A');
         g.Vt.add('a');
         g.Vt.add('b');
-        g.Vt.add(null);
+        g.Vt.add('ε');
         g.S = 'S';
         g.addPformula('S', "αAβ");
         g.addPformula('S', "θQ");

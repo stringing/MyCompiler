@@ -1,4 +1,4 @@
-package GrammarAnalyzer;
+package Parser;
 
 import java.util.*;
 
@@ -45,7 +45,6 @@ public class LL1Transformer {
                 substitude(grammar.P.pformula, j, i);
             }
         }
-        System.out.println(grammar);
         int p = 0;
         for(Map.Entry<Character, List<String>> entry : grammar.P.pformula.entrySet()){
             //代入算法最后必定是非终结符排序的最后一个非终结符含有左递归
@@ -66,6 +65,7 @@ public class LL1Transformer {
                 }
                 if(flag){
                     Character c = fetchOneCharacter();
+                    grammar.Vn.add(c);
                     for(int i = 0; i < pfml.size(); i++){
                         pfml.set(i, pfml.get(i) + c);
                     }
@@ -73,11 +73,21 @@ public class LL1Transformer {
                     for(String alpha : alphas){
                         newAlpha.add(alpha + c);
                     }
-                    newAlpha.add(null);
+                    newAlpha.add("ε");
                     grammar.P.pformula.put(c, newAlpha);
                 }
             }
             p++;
+        }
+        //去除从开始符号出发永远无法到达的非终结符的产生规则
+        for(Map.Entry<Character, List<String>> entry : grammar.P.pformula.entrySet()){
+            Character c = entry.getKey();
+            Iterator<String> it = entry.getValue().iterator();
+            while(it.hasNext()){
+                if(it.next().charAt(0) == c){
+                    it.remove();
+                }
+            }
         }
     }
 
@@ -179,6 +189,7 @@ public class LL1Transformer {
                         substitution.add(key + value.get(0));
                     }else{
                         c = fetchOneCharacter();
+                        grammar.Vn.add(c);
                         substitution.add(key + c);
                         newp.put(String.valueOf(c), value);
                     }
