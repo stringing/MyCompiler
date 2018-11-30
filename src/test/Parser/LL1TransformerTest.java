@@ -51,7 +51,7 @@ public class LL1TransformerTest {
 
     @Test
     public void transToLL1Test2() throws IOException {
-        Grammar g = new Grammar("resource/grammar_1.txt");
+        Grammar g = new Grammar("resource/p69_4_3.txt");
         System.out.println(g);
         LL1Transformer.transToLL1(g);
         System.out.println("---------------------");
