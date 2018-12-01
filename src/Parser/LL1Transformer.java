@@ -46,9 +46,9 @@ public class LL1Transformer {
             }
         }
         int p = 0;
+        Map<Character, List<String>> tmp = new HashMap<>();
         for(Map.Entry<Character, List<String>> entry : grammar.P.pformula.entrySet()){
-            //代入算法最后必定是非终结符排序的最后一个非终结符含有左递归
-            if(p == grammar.P.pformula.size() - 1){
+            //if(p == grammar.P.pformula.size() - 1){
                 //消除左递归
                 Character nonterminal = entry.getKey();
                 List<String> pfml = entry.getValue();
@@ -74,13 +74,17 @@ public class LL1Transformer {
                         newAlpha.add(alpha + c);
                     }
                     newAlpha.add("ε");
-                    grammar.P.pformula.put(c, newAlpha);
+                    tmp.put(c, newAlpha);
+                    //grammar.P.pformula.put(c, newAlpha);
                 }
-            }
+            //}
             p++;
         }
+        for(Map.Entry<Character, List<String>> entry : tmp.entrySet()){
+            grammar.P.pformula.put(entry.getKey(), entry.getValue());
+        }
         //去除从开始符号出发永远无法到达的非终结符的产生规则
-        for(Map.Entry<Character, List<String>> entry : grammar.P.pformula.entrySet()){
+        /*for(Map.Entry<Character, List<String>> entry : grammar.P.pformula.entrySet()){
             Character c = entry.getKey();
             Iterator<String> it = entry.getValue().iterator();
             while(it.hasNext()){
@@ -88,7 +92,7 @@ public class LL1Transformer {
                     it.remove();
                 }
             }
-        }
+        }*/
     }
 
     /**
@@ -115,8 +119,8 @@ public class LL1Transformer {
         Map<Integer, List<String>> markMap = new LinkedHashMap<>();
         for(int k = 0; k < pi.size(); k++){
             String pf = pi.get(k);
-            for(int x = 0; x < pf.length(); x++){
-                if(pf.charAt(x) == nj){
+            //for(int x = 0; x < pf.length(); x++){
+                if(pf.charAt(0) == nj){
                     List<String> mid = new ArrayList<>();
                     for(int w = 0; w < pj.size(); w++){
                         String tmp = pf;
@@ -128,7 +132,7 @@ public class LL1Transformer {
                     markMap.put(k, tmpList);
                 }else{
                 }
-            }
+            //}
         }
         List<String> newAlphas = new ArrayList<>();
         for(int y = 0; y < pi.size(); y++){

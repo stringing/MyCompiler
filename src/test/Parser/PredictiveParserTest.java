@@ -62,6 +62,13 @@ public class PredictiveParserTest {
     }
 
     @Test
+    public void createPredictiveTableTest2() throws IOException {
+        Grammar g = new Grammar("resource/grammar_1.txt");
+        LL1Transformer.transToLL1(g);
+        System.out.println(g);
+    }
+
+    @Test
     public void parseTest() throws IOException {
         Grammar g = createGrammarSample();
         PredictiveParser.createFirstForGrammar(g);
@@ -81,9 +88,9 @@ public class PredictiveParserTest {
 
     @Test
     public void parseTest2() throws IOException {
-        //Grammar g = new Grammar("resource/grammar_1.txt");
-        Grammar g = createGrammarSample2();
-        //LL1Transformer.transToLL1(g);
+        Grammar g = new Grammar("resource/grammar_1.txt");
+        //Grammar g = createGrammarSample2();
+        LL1Transformer.transToLL1(g);
         System.out.println(g);
         PredictiveParser.createFirstForGrammar(g);
         PredictiveParser.createFollowForGrammarUtilNoIncrement(g);
