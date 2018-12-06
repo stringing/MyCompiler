@@ -1,6 +1,6 @@
-package test.Parser;
+package test.parser;
 
-import Parser.Grammar;
+import parser.Grammar;
 import org.junit.Test;
 
 import java.io.IOException;

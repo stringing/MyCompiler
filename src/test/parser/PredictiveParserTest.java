@@ -1,8 +1,8 @@
-package test.Parser;
+package test.parser;
 
-import Parser.Grammar;
-import Parser.LL1Transformer;
-import Parser.PredictiveParser;
+import parser.Grammar;
+import parser.LL1Transformer;
+import parser.PredictiveParser;
 import org.junit.Test;
 
 import java.io.*;
@@ -27,9 +27,9 @@ public class PredictiveParserTest {
         Grammar g = new Grammar("resource/grammar_1.txt");
         LL1Transformer.transToLL1(g);
         PredictiveParser.createFirstForGrammar(g);
-        PredictiveParser.createFollowForGrammar(g);
-        System.out.println(g);
-        System.out.println(PredictiveParser.firsts);
+        PredictiveParser.createFollowForGrammarUtilNoIncrement(g);
+        //System.out.println(g);
+        //System.out.println(PredictiveParser.firsts);
         System.out.println(PredictiveParser.follows);
     }
 
@@ -58,14 +58,17 @@ public class PredictiveParserTest {
         PredictiveParser.createFirstForGrammar(g);
         PredictiveParser.createFollowForGrammarUtilNoIncrement(g);
         PredictiveParser.createPredictiveTable(g);
-        PredictiveParser.pt.printTable();
+        PredictiveParser.printPredictiveTable();
     }
 
     @Test
     public void createPredictiveTableTest2() throws IOException {
         Grammar g = new Grammar("resource/grammar_1.txt");
         LL1Transformer.transToLL1(g);
-        System.out.println(g);
+        PredictiveParser.createFirstForGrammar(g);
+        PredictiveParser.createFollowForGrammarUtilNoIncrement(g);
+        PredictiveParser.createPredictiveTable(g);
+        PredictiveParser.printPredictiveTable();
     }
 
     @Test
@@ -74,7 +77,7 @@ public class PredictiveParserTest {
         PredictiveParser.createFirstForGrammar(g);
         PredictiveParser.createFollowForGrammarUtilNoIncrement(g);
         PredictiveParser.createPredictiveTable(g);
-        PredictiveParser.pt.printTable();
+        PredictiveParser.printPredictiveTable();
 //        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File("resource/expression.txt"))));
                 BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File("resource/expression_reset.txt"))));
         String expression;
@@ -97,7 +100,7 @@ public class PredictiveParserTest {
         PredictiveParser.createPredictiveTable(g);
         System.out.println(PredictiveParser.firsts);
         System.out.println(PredictiveParser.follows);
-        PredictiveParser.pt.printTable();
+        PredictiveParser.printPredictiveTable();
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File("resource/expression_reset.txt"))));
         String expression;
         while((expression = br.readLine()) != null){

@@ -1,4 +1,4 @@
-package Parser;
+package parser;
 
 import java.util.*;
 
@@ -12,7 +12,7 @@ public class PredictiveParser {
     public static Map<Character, Set<Character>> firsts = new HashMap<>();
     private static List<Character> alphaHistory = null;
     public static Map<Character, Set<Character>> follows = new HashMap<>();
-    public static PredictiveTable pt;
+    private static PredictiveTable pt;
 
     public static void createFirstForGrammar(Grammar grammar){
         for(Character c : grammar.Vn){
@@ -253,5 +253,9 @@ public class PredictiveParser {
             }
         }
         return true;
+    }
+
+    public static void printPredictiveTable(){
+        pt.printTable();
     }
 }

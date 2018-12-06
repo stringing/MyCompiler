@@ -1,12 +1,10 @@
-package test.Parser;
+package test.parser;
 
-import Parser.Grammar;
-import Parser.LL1Transformer;
+import parser.Grammar;
+import parser.LL1Transformer;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**

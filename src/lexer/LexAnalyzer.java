@@ -1,4 +1,4 @@
-package Lexer;
+package lexer;
 
 import javafx.util.Pair;
 

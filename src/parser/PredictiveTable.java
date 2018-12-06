@@ -1,4 +1,4 @@
-package Parser;
+package parser;
 
 
 import javafx.util.Pair;
@@ -24,15 +24,11 @@ public class PredictiveTable {
     }
 
     private void addNonterminals(Set<Character> vn){
-        for(Character c : vn){
-            nonterminals.add(c);
-        }
+        nonterminals.addAll(vn);
     }
 
     private void addTerminals(Set<Character> vt){
-        for(Character c : vt){
-            terminals.add(c);
-        }
+        terminals.addAll(vt);
         terminals.add('#');
     }
 

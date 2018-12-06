@@ -1,10 +1,12 @@
-package test.Lexer;
+package test.lexer;
 
-import Lexer.LexAnalyzer;
+import lexer.LexAnalyzer;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * @Description
@@ -18,5 +20,13 @@ public class LexicalAnalyzerTest {
         File program = new File("resource/expression.txt");
         LexAnalyzer.lexProcess(program);
         LexAnalyzer.printTypes();
+    }
+
+    @Test
+    public void ooooo() throws FileNotFoundException {
+        Scanner sc = new Scanner(new File("C:\\Users\\lenovo\\Desktop\\t.txt"));
+        while(sc.hasNext()){
+            System.out.println(sc.next());
+        }
     }
 }
