@@ -77,7 +77,7 @@ public class OperatorPrecedenceParser {
 
     /**
      * 构建所有非终结符的LASTVT集
-     * @param grammar 文法·
+     * @param grammar 文法
      */
     public static void createLastvts(Grammar grammar){
         for(Character P : grammar.Vn){
@@ -122,7 +122,7 @@ public class OperatorPrecedenceParser {
 
     /**
      * 根据FIRSTVT和LASTVT集构建优先表
-     * @param grammar
+     * @param grammar 文法
      */
     public static void createPrecedenceTable(Grammar grammar){
         pt = new PrecedenceTable(grammar);
