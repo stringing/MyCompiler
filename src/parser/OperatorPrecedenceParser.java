@@ -18,7 +18,7 @@ public class OperatorPrecedenceParser {
     private static Character[] S;
 
     /**
-     * 将符号对[P,a]置为真并压入栈
+     * 将符号对[P,a]置为真并压入栈F
      * @param P 非终结符
      * @param a 终结符
      */
