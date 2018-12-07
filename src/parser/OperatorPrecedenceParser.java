@@ -15,6 +15,7 @@ public class OperatorPrecedenceParser {
     private static Map<Character, Set<Character>> Lastvts = new HashMap<>();
     private static Map<Pair<Character, Character>, Boolean> F = new HashMap<>();
     private static Stack<Pair<Character, Character>> stack = new Stack<>();
+    private static Character[] S;
 
     /**
      * 将符号对[P,a]置为真并压入栈
@@ -153,17 +154,23 @@ public class OperatorPrecedenceParser {
         }
     }
 
+    /**
+     * 根据预测分析表分析语句正误
+     * @param grammar 文法
+     * @param expression 语句
+     * @return true如果语句正确，false如果语句错误
+     */
     public static boolean parse(Grammar grammar, String expression){
         int k = 0;
         int p = 0;
-        int j = 0;
-        Character[] S = new Character[64];
+        int j;
+        S = new Character[64];
         S[k] = '#';
-        Character a = null;
-        Character Q = null;
+        Character a = '?';
+        Character Q;
         while(a != '#'){
             a = expression.charAt(p++);
-            if(grammar.Vt.contains(S[k])){
+            if(grammar.Vt.contains(S[k]) || S[k] =='#'){
                 j = k;
             }else{
                 j = k - 1;
@@ -171,17 +178,64 @@ public class OperatorPrecedenceParser {
             while(pt.compare(S[j], a) == 1){
                 do{
                     Q = S[j];
-                    if(grammar.Vt.contains(S[j - 1])){
+                    if(grammar.Vt.contains(S[j - 1]) || S[j - 1] == '#'){
                         j -= 1;
                     }else{
                         j -= 2;
                     }
                 }while(pt.compare(S[j], Q) == 0 || pt.compare(S[j], Q) == 1);
-                k = j + 1;
-//                S[k]
+                for(Map.Entry<Character, List<String>> entry : grammar.P.pformula.entrySet()){
+                    boolean flag = false;
+                    for(String alpha : entry.getValue()){
+                        if(alpha.length() == k - j){
+                            for(int i = j + 1; i <= k; i++){
+                                if((grammar.Vt.contains(alpha.charAt(i - j - 1)) && grammar.Vt.contains(S[i]))
+                                        || (grammar.Vn.contains(alpha.charAt(i - j - 1)) && grammar.Vn.contains(S[i]))){
+                                    flag = true;
+                                }else{
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                            if(flag){
+                                for(int i = j + 1; i <= k; i++){
+                                    S[i] = null;
+                                }
+                            }
+                        }
+                        if(flag)break;
+                    }
+                    if(flag){
+                        k = j + 1;
+                        S[k] = entry.getKey();
+                        break;
+                    }
+                }
+            }
+            if(pt.compare(S[j], a) == -1 || pt.compare(S[j], a) == 0){
+                k += 1;
+                S[k] = a;
+            }else{
+                return false;
             }
         }
+        String finalExpression = getS();
+        if(finalExpression.length() == 3 && finalExpression.charAt(0) == '#' && finalExpression.charAt(2) == '#' && grammar.Vn.contains(finalExpression.charAt(1)))
+            return true;
         return false;
+    }
+
+    /**
+     * 得到栈S里最后规约的内容
+     * @return 栈内的内容
+     */
+    public static String getS(){
+        StringBuilder sb = new StringBuilder();
+        for(Character c : S){
+            if(c == null)break;
+            sb.append(c);
+        }
+        return sb.toString();
     }
 
     /**
