@@ -226,6 +226,12 @@ public class OperatorPrecedenceParser {
         return false;
     }
 
+    /**
+     * 通过从词法分析器提取的词组成语法分析器可以分析的语句
+     * @param grammar 文法
+     * @param typeList 词法分析器提词结果
+     * @return 每条语句的语法分析结果
+     */
     public static List<Pair<String, Boolean>> parseAll(Grammar grammar, List<Pair<String, String>> typeList){
         List<Pair<String, Boolean>> result = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
