@@ -43,6 +43,7 @@ public class LexAnalyzer {
 
         //读入每个字符，同时根据状态图判断每次所到的状态
         public int processInput(char c){
+//            System.out.println("current: " + c);
             if(currentStatus == Status.NOT_ALPHA_NUM || currentStatus == Status.NOT_ZERO_TO_NINE
                     || currentStatus == Status.NOT_ZERO_TO_SEVEN || currentStatus == Status.NOT_ZERO_TO_F
                     || currentStatus == Status.INVALID_CHAR){
@@ -164,10 +165,13 @@ public class LexAnalyzer {
                 else
                     currentStatus = Status.ZERO_TO_NINE;
             }else if(hasChar(OPERATORS_AND_DELIMITERS, c)){
-                if(c != ' ')
+                typeList.add(new Pair<>(String.valueOf(c), "-"));
+                s.clear();
+                currentStatus = Status.START;
+                /*if(c != ' ')
                     currentStatus = Status.INVALID_CHAR;
                 else
-                    s.pop();
+                    s.pop();*/
             }else{
                 currentStatus = Status.INVALID_CHAR;
             }
@@ -226,4 +230,6 @@ public class LexAnalyzer {
             System.out.println("<" + p.getKey() + "," + p.getValue() + ">");
         }
     }
+
+    public static List<Pair<String, String>> getTypeList(){return typeList;}
 }

@@ -1,5 +1,7 @@
 package test.parser;
 
+import javafx.util.Pair;
+import lexer.LexAnalyzer;
 import parser.Grammar;
 import parser.LL1Transformer;
 import parser.PredictiveParser;
@@ -91,6 +93,10 @@ public class PredictiveParserTest {
 
     @Test
     public void parseTest2() throws IOException {
+        //词法分析器提词
+        File program = new File("resource/expression.txt");
+        LexAnalyzer.lexProcess(program);
+        //语法分析
         Grammar g = new Grammar("resource/grammar_1.txt");
         //Grammar g = createGrammarSample2();
         LL1Transformer.transToLL1(g);
@@ -101,11 +107,8 @@ public class PredictiveParserTest {
         System.out.println(PredictiveParser.firsts);
         System.out.println(PredictiveParser.follows);
         PredictiveParser.printPredictiveTable();
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File("resource/expression_reset.txt"))));
-        String expression;
-        while((expression = br.readLine()) != null){
-            expression = expression.replace(";", "");
-            System.out.println(expression + " : " + PredictiveParser.parse(g, expression));
+        for(Pair<String, Boolean> p : PredictiveParser.parseAll(g, LexAnalyzer.getTypeList())){
+            System.out.println(p.getKey() + ": " + p.getValue());
         }
     }
 

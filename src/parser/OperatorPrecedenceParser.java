@@ -161,6 +161,7 @@ public class OperatorPrecedenceParser {
      * @return true如果语句正确，false如果语句错误
      */
     public static boolean parse(Grammar grammar, String expression){
+        expression += '#';
         int k = 0;
         int p = 0;
         int j;
@@ -223,6 +224,27 @@ public class OperatorPrecedenceParser {
         if(finalExpression.length() == 3 && finalExpression.charAt(0) == '#' && finalExpression.charAt(2) == '#' && grammar.Vn.contains(finalExpression.charAt(1)))
             return true;
         return false;
+    }
+
+    public static List<Pair<String, Boolean>> parseAll(Grammar grammar, List<Pair<String, String>> typeList){
+        List<Pair<String, Boolean>> result = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        for(Pair<String, String> p : typeList){
+            if(Character.isDigit(p.getKey().charAt(0))){
+                //先不管10进制之外的进制
+                if(p.getKey().equals("1") || p.getKey().equals("0"))
+                    sb.append("i");
+            }else{
+                if(p.getKey().equals(";")){
+                    String expression = sb.toString();
+                    result.add(new Pair<>(expression, parse(grammar, expression)));
+                    sb = new StringBuilder();
+                }else{
+                    sb.append(p.getKey());
+                }
+            }
+        }
+        return result;
     }
 
     /**
