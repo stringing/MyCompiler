@@ -5,7 +5,6 @@ import lexer.LexAnalyzer;
 import org.junit.Test;
 import parser.Grammar;
 import parser.OperatorPrecedenceParser;
-import parser.PredictiveParser;
 
 import java.io.*;
 
