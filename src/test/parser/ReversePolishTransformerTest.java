@@ -32,4 +32,22 @@ public class ReversePolishTransformerTest {
             System.out.println();
         }
     }
+
+    @Test
+    public void transToReversePolishTest2() throws IOException {
+        //词法分析器提词
+        File program = new File("resource/ex4_extra.txt");
+        LexAnalyzer.lexProcess(program);
+        List<List<Variable>> list = ReversePolishTransformer.transToReversePolish(LexAnalyzer.getTypeList());
+        for(List<Variable> variables : list){
+            for(int i = variables.size() - 1; i >= 0; i--){
+                if(i != 0){
+                    System.out.print(variables.get(i) + ", ");
+                }else{
+                    System.out.print(variables.get(i));
+                }
+            }
+            System.out.println();
+        }
+    }
 }
